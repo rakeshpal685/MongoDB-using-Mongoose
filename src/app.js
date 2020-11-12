@@ -5,6 +5,7 @@ mongoose
   .connect('mongodb://localhost:27017/RakeshDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex:true,
   })
   .then(() => console.log('Connection successful'))
   .catch((err) => console.log(err));
@@ -13,10 +14,21 @@ mongoose
 const playlistSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: true,//Validating that this is a required field and while creating documment(row) this is required.
+    unique:true,
+    trim:true,//This will trim the blank space if provided in the beginning and end for name field while creating documment(row).
+    minlength:[2,"minimum 2 letters are required"]// Here we are specifing the minimum length for the name field as well as our custom error message.
+    //We can specify the custom message in an array where the first value is the validation value and the second is our message.
   },
   ctype: String,
-  videos: Number,
+  videos: { // Here we are crating our own validator for video column
+    type:Number,
+  validate(val){ //val will take the value that the user provide for videos field while creating the document(row), 
+    if(val<0){
+  throw new Error("Video count cannot be less then 0")// We are throwing our own error message after validating.
+      }
+    }
+  },
   author: String,
   active: Boolean,
   date: {
@@ -136,6 +148,7 @@ const Table = new mongoose.model('Playlist', playlistSchema);
 //     console.log(error);
 //   }
 // };
+
 
 // updateDocument("5fa99e81e929183694e24d6a");//Id of the row which we want to update.
 
