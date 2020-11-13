@@ -35,9 +35,9 @@ const playlistSchema = new mongoose.Schema({
     type:String,
     required:true,
     unique:true,
-    validate(val){ // Here we are using the npm validation package to validate this column
+    validate(val){ // Here we are using the npm validation package to validate the email column, "val" will be the value that the user will input while creating the row
       if(!validator.isEmail(val)){
-        throw new Error("Email is not valid");
+        throw new Error("Email is not valid"); // custom message
       }
     }
   },
@@ -70,4 +70,4 @@ const createDocument = async () => {
     console.log(err);
   }
 };
-createDocument(); // run the function to add the row
+createDocument(); // run the function to add the row 
