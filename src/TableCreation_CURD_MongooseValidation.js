@@ -21,7 +21,7 @@ const playlistSchema = new mongoose.Schema({
     //We can specify the custom message in an array where the first value is the validation value and the second is our message.
   },
   ctype: String,
-  videos: { // Here we are crating our own validator for video column
+  videos: { // Here we are crating our own validator for video column while creating documment(row).
     type:Number,
   validate(val){ //val will take the value that the user provide for videos field while creating the document(row), 
     if(val<0){
